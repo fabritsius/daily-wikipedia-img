@@ -9,7 +9,7 @@ This project is my first attempt at golang. I tried to include every single conc
 To run this server locally:
 
 0. Have Go installed (remember about GOPATH, if it matters on your machine);
-1. Clone this repo `git clone daily-wikipedia-img`
+1. Clone this repo `git clone https://github.com/fabritsius/daily-wikipedia-img`
 2. Change directory
 3. Enter `go run main.go` to start the server
 4. Visit [localhost:5000](https://localhost:5000) with your browser

@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{{ .Title }}</title>
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" href="styles.css">
+	</head>
+	<body>
+		<h1>{{ .Title }}</h1>
+		<p id="page-description">{{ .Description }}</p>
+		<div>
+		{{ range $_, $Item := .Items }}
+			<div class="item">
+				<figure>
+					<h3 class="item-day">{{ $Item.Day }}</h3>
+					<a href="{{ $Item.ImgSrc }}" target="_blank">
+						<img src="{{ $Item.ImgSrc }}" alt="{{ $Item.Title }}">
+					</a>
+					<figcaption>
+						<span>{{ $Item.Title }}</span>
+					</figcaption>
+				</figure>
+				<p class="item-description">{{ $Item.Description }}</p>
+				<div class="item-footer">
+					<div class="daily-random-number-box"></div>
+					<div class="original-post-link-box">
+						<a class="original-post-link" href="{{ $Item.Link }}" target="_blank">original post</a>
+					</div>
+				</div>
+			</div>
+		{{ end }}
+		</div>
+		<footer>
+			<p>Created by: <a id="my-name" href="https://github.com/fabritsius" target="_blank">Anton Fabritsius</a></p>
+	  		<p>Sep 2018</p>
+	  		<a href="https://github.com/fabritsius/linear-regression" title="GitHub Repository" target="_blank">
+	  			<img id="git-logo" src="icons/github.png" alt="GitHub">
+	  		</a>
+		</footer>
+	</body>
+</html>

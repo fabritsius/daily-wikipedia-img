@@ -6,7 +6,7 @@ This project is my first attempt at golang. I tried to include every single conc
 
 ### Usage
 
-TO run this server locally:
+To run this server locally:
 
 0. Have Go installed (remember about GOPATH, if it matters on your machine);
 1. Clone this repo `git clone daily-wikipedia-img`

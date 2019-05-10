@@ -21,6 +21,7 @@ const URI string = "https://en.wikipedia.org/w/api.php?action=featuredfeed&forma
 
 var wg sync.WaitGroup
 
+// main function sets server handlers and starts the server
 func main() {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/styles.css", stylesHandler)

@@ -22,5 +22,5 @@ To run this server locally:
 - [x] Upload server to App Engine
 - [x] Create gh-pages wrapper for the project
 - [x] Host the website with GitHub
-- [ ] Make design more pleasing to look at
+- [ ] Make the design more pleasing to look at
 - [ ] Add more features (like image pop-ups)

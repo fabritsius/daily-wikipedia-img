@@ -1,4 +1,4 @@
-# Wikipedia picture of the day feed
+# Wikipedia's picture of the day feed
 
 ### About this project
 

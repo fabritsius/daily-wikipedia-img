@@ -26,7 +26,7 @@ p#page-description {
 
 div.item {
 	margin: 10px 0;
-	border-bottom: solid black 1px;
+	border-bottom: solid #bfbfbf 1px;
 }
 
 figure {
@@ -36,9 +36,10 @@ figure {
 }
 
 figcaption {
+	color: #296dab;
 	padding: 20px;
 	text-align: center;
-	font-style: italic;
+	font-family: 'Georgia';
 	margin: 0;
 }
 
@@ -51,11 +52,9 @@ img {
 
 p.item-description {
 	padding-bottom: 20px;
-	text-align: center;
 	font-size: 18px;
 	font-family: "Open Sans", normal;
 	font-weight: 500;
-	/*font-family: "Times New Roman", Times, serif;*/
 }
 
 div.original-post-link-box {
@@ -64,21 +63,26 @@ div.original-post-link-box {
 }
 
 a.original-post-link {
-	color: grey;
-	text-decoration: none;
+	color: #296dab;
+	padding: 2px 4px;
 	font-size: 15px;
+}
+
+a.original-post-link:hover {
+	color: white;
+	background-color: #296dab;
 }
 
 div.item-footer {
 	display: flex;
 	flex-wrap: wrap;
-	padding-bottom: 10px;
+	padding-bottom: 5px;
 }
 
 footer {
 	color: grey;
 	font-size: 12px;
-	padding: 10px 0;
+	padding: 15px 0;
 	text-align: center;
 	margin-bottom: 20px;
 }
@@ -86,16 +90,24 @@ footer {
 #my-name {
 	color: grey;
 	text-decoration: none;
-	padding: 0 2px;
-	border-radius: 3px;
+	padding: 2px;
+	cursor: pointer;
 }
 
 #my-name:hover {
 	color: white;
-	background-color: #14c753;
+	background-color: #296dab;
 }
 
 #git-logo {
 	width: 20px;
 	height: 20px;
+}
+
+#git-logo:hover {
+	filter:
+		invert(0.4)
+		sepia(1)
+		hue-rotate(150deg)
+		brightness(0.7);
 }

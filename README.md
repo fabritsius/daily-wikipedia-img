@@ -2,7 +2,11 @@
 
 ### About this project
 
-This project is my first attempt at golang. I tried to include every single concept and almost succeeded. I actually have supporting project which I decided to exclude temporarily before committing the code (I will add it back later). This repository can be helpful to those who also start their journey with Go. Such "useful" projects are still great for learning purposes.
+This project is my first attempt at Golang. I tried to include every single concept (and kind of failed). This repository can be helpful to those who also start their journey with Go.
+
+I also made a [version](https://github.com/fabritsius/daily-wikipedia-img/tree/app-engine-ver) to be hosted with Google's App Engine. You can click [the URI](https://fabritsius.github.io/daily-wikipedia-img/) on the top of the project page or use the link below. I also made a simple [HTML wrapper](https://github.com/fabritsius/daily-wikipedia-img/tree/gh-pages) to hide App Engine's URI (so it looks like the webpage is hosted by GitHub).
+
+#### [Go to the webpage](https://fabritsius.github.io/daily-wikipedia-img/)
 
 ### Usage
 
@@ -17,14 +21,8 @@ To run this server locally:
 ### TODO
 
 - [x] Add core features and create this repo
-- [ ] Add all temporarily excluded features
-- [ ] Add another path to the server for JSON requests
-- [ ] Upload server to Heroku
-- [ ] Create gh-pages wrapper for the project which uses JSON response
-- [ ] Host the website with GitHub
-
-### Thoughts about Go
-
-Overall, I like it a lot and agree with every benefit people say when the talk about golang. The only thing that's frustrating is this mandatory "no unused variable" thing. Don't get me wrong, it is great in the production or right before the project is complete. But, for the most part it is a huge pain in somewhere. Simple example is when I comment out one line and now I am told to comment out this function and some unused variable (I will have to return everything back eventually) and this process can continue further. Maybe this behavior doesn't matter in a huge projects, but during learning process the do matter. Also, I heard a lot about lightning speed and how fast is Go. I have to say that after all this torment time saved is probably negative.
-
-My solution is to have this rule only on build process. So, when I use `go run main.go` I see a warning, but my code compiles and when I use `go build main.go` process stops the way it currently does.
+- [x] Upload server to App Engine
+- [x] Create gh-pages wrapper for the project
+- [x] Host the website with GitHub
+- [ ] Make design more pleasing to look at
+- [ ] Add more features (like image pop-ups)

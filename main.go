@@ -103,6 +103,10 @@ func (d *DailyItem) FillWithValues() {
 	tokenizer := html.NewTokenizer(strings.NewReader(d.HTML))
 	isFirstParagraph := true
 	recordingDescription := false
+	// Leave only the date for each post
+	dayTitleWords := strings.Split(d.Day, " ")
+	dtLen := len(dayTitleWords)
+	d.Day = fmt.Sprintf("%s %s", dayTitleWords[dtLen-2], dayTitleWords[dtLen-1])
 	// Look through HTML to find relevant pieces of information
 	for {
 		tokenType := tokenizer.Next()

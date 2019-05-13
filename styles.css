@@ -12,9 +12,14 @@ h1 {
 }
 
 h3.item-day {
-	text-align: right;
-	margin-top: 30px;
-	padding-right: 10px;
+	display: inline-block;
+	position: absolute;
+	left: -75px;
+	top: 25px;
+	padding: 4px 8px;
+	color: white;
+	font-size: 0.8em;
+	background-color: #296dab;	
 }
 
 p#page-description {
@@ -25,7 +30,9 @@ p#page-description {
 }
 
 div.item {
+	position: relative;
 	margin: 10px 0;
+	padding-top: 40px;
 	border-bottom: solid #bfbfbf 1px;
 }
 
@@ -110,4 +117,10 @@ footer {
 		sepia(1)
 		hue-rotate(150deg)
 		brightness(0.7);
+}
+
+@media screen and (max-width: 729px) {
+	h3.item-day {
+		position: static;
+	}
 }

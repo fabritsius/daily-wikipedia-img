@@ -8,6 +8,8 @@ body {
 
 h1 {
 	padding: 10px;
+	margin: 0;
+	margin-top: 10px;
 	font-size: 30px;
 }
 
@@ -15,25 +17,27 @@ h3.item-day {
 	display: inline-block;
 	position: absolute;
 	left: -75px;
-	top: 25px;
+	top: 20px;
 	padding: 4px 8px;
+	margin: 0;
+	margin-bottom: 20px;
 	color: white;
 	font-size: 0.8em;
 	background-color: #296dab;	
 }
 
-p#page-description {
+#page-description {
 	color: grey;
 	padding: 0 30px;
-	margin: 0;
+	margin: 10px 0;
 	font-size: 20px;
 }
 
 div.item {
 	position: relative;
-	margin: 10px 0;
-	padding-top: 40px;
-	border-bottom: solid #bfbfbf 1px;
+	padding: 10px 0;
+	padding-top: 20px;
+	border-bottom: solid #e6e6e6 1px;
 }
 
 figure {
@@ -122,5 +126,15 @@ footer {
 @media screen and (max-width: 729px) {
 	h3.item-day {
 		position: static;
+	}
+
+	#page-description {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 467px) {
+	h1 {
+		font-size: 6vw;
 	}
 }

@@ -90,6 +90,26 @@ div.item-footer {
 	padding-bottom: 5px;
 }
 
+div.see-more {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+a.see-more {
+	display: inline-block;
+	padding: 4px 8px;
+	margin: 10px auto;
+	color: #296dab;
+	font-size: 22px;
+	text-decoration: none;
+}
+
+a.see-more:hover {
+	color: white;
+	background-color: #296dab;
+}
+
 footer {
 	color: grey;
 	font-size: 12px;

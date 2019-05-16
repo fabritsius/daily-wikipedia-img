@@ -14,6 +14,11 @@ self.addEventListener('install', (event) => {
       return cache.addAll(urlsToCache);
     })
   );
+  
+  event.registerForeignFetch({
+    scopes: [self.registration.scope],
+    origins: ['*']
+  });
 });
 
 // Respond with cached resources

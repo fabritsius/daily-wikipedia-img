@@ -2,8 +2,7 @@ const APP_NAME = 'daily-wikipedia-img';
 const CACHE_NAME = `${APP_NAME}-v1`;
 const urlsToCache = [
   `/${APP_NAME}/`,
-  `/${APP_NAME}/index.html`,
-  'https://daily-wiki-24-7.appspot.com/favicon.ico'
+  `/${APP_NAME}/index.html`
 ];
 
 // Perform install steps
@@ -20,7 +19,6 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((request) => {
-      event.request.mode = 'cors'
       return request || fetch(event.request).then((response) => {
         return caches.open(CACHE_NAME).then((cache) => {
           cache.put(event.request, response.clone());

@@ -16,5 +16,16 @@
 </head>
 <body>
     <iframe id="content" src="https://daily-wiki-24-7.appspot.com/" frameborder="0"></iframe>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js', {scope: '/daily-wikipedia-img/'}).then((registration) => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, (err) => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
 </body>
 </html>

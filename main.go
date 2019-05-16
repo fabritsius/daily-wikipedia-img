@@ -15,19 +15,20 @@ import (
 	"google.golang.org/appengine/urlfetch"
 )
 
+// URI – Wikipedia Daily Image API Link
 const URI string = "https://en.wikipedia.org/w/api.php?action=featuredfeed&format=json&feed=potd"
 
 var wg sync.WaitGroup
 
+// main function sets server handlers and starts the server
 func main() {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/styles.css", stylesHandler)
 	http.HandleFunc("/favicon.ico", favIconHandler)
-	http.HandleFunc("/icons/github.png", gitIconHandler)
 	appengine.Main()
 }
 
-// Handles path "/"
+// indexHandler function handles path "/"
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	wikiData := GetWikiData(URI, r)
 	t, _ := template.ParseFiles("index.html")
@@ -35,31 +36,26 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.Method, r.URL)
 }
 
-// Handles path "/styles.css"
+// stylesHandler function handles path "/styles.css"
 func stylesHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "styles.css")
 	fmt.Println(r.Method, r.URL)
 }
 
-// Handles path "/favicon.ico"
+// favIconHandler function handles path "/favicon.ico"
 func favIconHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "icons/wikipedia.ico")
 	fmt.Println(r.Method, r.URL)
 }
 
-// Handles path "/github.png"
-func gitIconHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "icons/github.png")
-	fmt.Println(r.Method, r.URL)
-}
-
+// WikiData – representation of Wikipedia's Daily Posts Data
 type WikiData struct {
 	Title       string      `xml:"channel>title"`
 	Description string      `xml:"channel>description"`
 	Items       []DailyItem `xml:"channel>item"`
 }
 
-// Fetch and return "picture of the day" data
+// GetWikiData function fetches and returns "picture of the day" data
 func GetWikiData(link string, r *http.Request) WikiData {
 	ctx := appengine.NewContext(r)
 	client := urlfetch.Client(ctx)
@@ -76,7 +72,7 @@ func GetWikiData(link string, r *http.Request) WikiData {
 		data.Items[i], data.Items[j] = data.Items[j], data.Items[i]
 	}
 
-	for i, _ := range data.Items {
+	for i := range data.Items {
 		wg.Add(1)
 		go data.Items[i].FillWithValues()
 	}
@@ -84,6 +80,7 @@ func GetWikiData(link string, r *http.Request) WikiData {
 	return data
 }
 
+// DailyItem – representation of Wikipedia Post Data
 type DailyItem struct {
 	Title       string
 	Day         string `xml:"title"`
@@ -93,7 +90,7 @@ type DailyItem struct {
 	HTML        string `xml:"description"`
 }
 
-// Fill DailyItem structure with values from HTML
+// FillWithValues function fills DailyItem structure with values from HTML
 func (d *DailyItem) FillWithValues() {
 	defer wg.Done()
 	tokenizer := html.NewTokenizer(strings.NewReader(d.HTML))
@@ -160,7 +157,7 @@ func (d *DailyItem) FillWithValues() {
 	}
 }
 
-// Return map with tag's attributes
+// getAttrVals function returns map with tag's attributes
 func getAttrVals(t *html.Tokenizer) map[string]string {
 	var result = make(map[string]string)
 	for {
@@ -170,15 +167,4 @@ func getAttrVals(t *html.Tokenizer) map[string]string {
 			return result
 		}
 	}
-}
-
-// Pretty print for Daily Items (unused at the moment)
-func (d DailyItem) String() string {
-	return fmt.Sprintf(`
-    Title         %s
-    Day           %s
-    Description   %s
-    ImgSrc        %s
-    Link          %s
-    `, d.Title, d.Day, d.Description, d.ImgSrc, d.Link)
 }

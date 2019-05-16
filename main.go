@@ -26,7 +26,6 @@ func main() {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/styles.css", stylesHandler)
 	http.HandleFunc("/favicon.ico", favIconHandler)
-	http.HandleFunc("/icons/github.png", gitIconHandler)
 	fmt.Println("...Serving on port", PORT)
 	http.ListenAndServe(PORT, nil)
 }
@@ -48,12 +47,6 @@ func stylesHandler(w http.ResponseWriter, r *http.Request) {
 // favIconHandler function handles path "/favicon.ico"
 func favIconHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "icons/wikipedia.ico")
-	fmt.Println(r.Method, r.URL)
-}
-
-// gitIconHandler function handles path "/github.png"
-func gitIconHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "icons/github.png")
 	fmt.Println(r.Method, r.URL)
 }
 

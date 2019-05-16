@@ -31,14 +31,14 @@ func main() {
 // indexHandler function handles path "/"
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	wikiData := GetWikiData(URI, r)
-	t, _ := template.ParseFiles("index.html")
+	t, _ := template.ParseFiles("templates/index.html")
 	t.Execute(w, wikiData)
 	fmt.Println(r.Method, r.URL)
 }
 
 // stylesHandler function handles path "/styles.css"
 func stylesHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "styles.css")
+	http.ServeFile(w, r, "css/main.css")
 	fmt.Println(r.Method, r.URL)
 }
 

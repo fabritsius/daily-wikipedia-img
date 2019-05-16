@@ -37,5 +37,16 @@
 			<span>Wikipedia picture of the day feed by <a href="https://github.com/fabritsius" target="_blank">@fabritsius</a> – Sep&nbsp;2018</span>
 			<br><span><a href="https://github.com/fabritsius/daily-wikipedia-img" target="_blank">Source Code is available on GitHub</a></span>
 		</footer>
+		<script>
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', () => {
+					navigator.serviceWorker.register('/sw.js').then((registration) => {
+						console.log('ServiceWorker registration successful with scope: ', registration.scope);
+					}, (err) => {
+						console.log('ServiceWorker registration failed: ', err);
+					});
+				});
+			}
+		</script>
 	</body>
 </html>

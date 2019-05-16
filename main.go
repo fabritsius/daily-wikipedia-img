@@ -25,6 +25,7 @@ func main() {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/styles.css", stylesHandler)
 	http.HandleFunc("/favicon.ico", favIconHandler)
+	http.HandleFunc("/sw.js", serviceWorkerHandler)
 	appengine.Main()
 }
 
@@ -45,6 +46,12 @@ func stylesHandler(w http.ResponseWriter, r *http.Request) {
 // favIconHandler function handles path "/favicon.ico"
 func favIconHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "icons/wikipedia.ico")
+	fmt.Println(r.Method, r.URL)
+}
+
+// serviceWorkerHandler function handles path "/sw.js"
+func serviceWorkerHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "js/sw.js")
 	fmt.Println(r.Method, r.URL)
 }
 

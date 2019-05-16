@@ -2,7 +2,8 @@ const APP_NAME = 'daily-wikipedia-img';
 const CACHE_NAME = `${APP_NAME}-v1`;
 const urlsToCache = [
   `/${APP_NAME}/`,
-  `/${APP_NAME}/index.html`
+  `/${APP_NAME}/index.html`,
+  'https://daily-wiki-24-7.appspot.com/favicon.ico'
 ];
 
 // Perform install steps

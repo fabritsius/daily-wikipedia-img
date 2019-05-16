@@ -35,6 +35,19 @@ self.addEventListener('fetch', (event) => {
   )
 })
 
+// Listen for requests from other origins
+self.addEventListener('foreignfetch', event => {
+  event.respondWith(
+    requestLogic(event.request).then(response => {
+      return {
+        response: response,
+        origin: event.origin,
+        headers: ['Content-Type']
+      };
+    })
+  );
+});
+
 // Delete outdated caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(

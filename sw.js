@@ -25,6 +25,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((request) => {
+      event.request.mode = 'cors'
       return request || fetch(event.request).then((response) => {
         return caches.open(CACHE_NAME).then((cache) => {
           cache.put(event.request, response.clone());
@@ -33,19 +34,6 @@ self.addEventListener('fetch', (event) => {
       });
     })
   )
-})
-
-// Listen for requests from other origins
-self.addEventListener('foreignfetch', event => {
-  event.respondWith(
-    requestLogic(event.request).then(response => {
-      return {
-        response: response,
-        origin: event.origin,
-        headers: ['Content-Type']
-      };
-    })
-  );
 });
 
 // Delete outdated caches

@@ -4,6 +4,8 @@
 
 Code on this branch was altered to be hosted with Google's App Engine. There is a link on the top of this page or below. I also made a simple [HTML wrapper](https://github.com/fabritsius/daily-wikipedia-img/tree/gh-pages) to hide App Engine's URI (so it looks like the webpage is hosted by GitHub).
 
+This application works offline after first reload.
+
 #### [Go to the webpage](https://fabritsius.github.io/daily-wikipedia-img/)
 
 ### Usage
@@ -23,4 +25,6 @@ To run this server locally:
 - [x] Create gh-pages wrapper for the project
 - [x] Host the website with GitHub
 - [x] Make the design more pleasing to look at
+- [x] Add a simple offline experience
+- [ ] Make the website installable (convert to PWA)
 - [ ] Add more features (like image pop-ups)

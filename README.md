@@ -6,9 +6,9 @@ This project is my first attempt at Golang. I tried to include every single conc
 
 I also made a [version](https://github.com/fabritsius/daily-wikipedia-img/tree/app-engine-ver) to be hosted with Google's App Engine. You can click [the URI](https://fabritsius.github.io/daily-wikipedia-img/) on the top of the project page or use the link below. I also made a simple [HTML wrapper](https://github.com/fabritsius/daily-wikipedia-img/tree/gh-pages) to hide App Engine's URI (so it looks like the webpage is hosted by GitHub).
 
-This application works offline after first reload.
+This application works offline after first reload and it can be installed to your device. If you choose to do so, please use [this version hosted by App Engine](https://daily-wiki-24-7.appspot.com/) (without my HTML wrapper). Both URIs do work, [this one](https://daily-wiki-24-7.appspot.com/) just works better and you are bothering only one server this way.
 
-#### [Go to the webpage](https://fabritsius.github.io/daily-wikipedia-img/)
+#### [Open the App](https://fabritsius.github.io/daily-wikipedia-img/)
 
 ### Usage
 
@@ -28,5 +28,5 @@ To run this server locally:
 - [x] Host the website with GitHub
 - [x] Make the design more pleasing to look at
 - [x] Add a simple offline experience
-- [ ] Make the website installable (convert to PWA)
+- [x] Make the website installable (convert to PWA)
 - [ ] Add more features (like image pop-ups)

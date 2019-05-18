@@ -2,7 +2,7 @@
     "name": "Picture of the day",
     "short_name": "Daily Pic",
     "start_url": "/",
-    "display": "minimal-ui",
+    "display": "standalone",
     "orientation": "portrait",
     "background_color": "white",
     "theme_color": "#296dab",

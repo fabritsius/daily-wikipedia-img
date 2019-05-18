@@ -3,4 +3,4 @@
 The app is written in Golang and is hosted on Google's App Engine.
 This wrapper hides App Engine URI.
 
-#### [Go to the projects live version](https://fabritsius.github.io/daily-wikipedia-img/)
+#### [Open the App](https://fabritsius.github.io/daily-wikipedia-img/)

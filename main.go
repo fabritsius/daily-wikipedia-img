@@ -25,8 +25,9 @@ var wg sync.WaitGroup
 func main() {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/styles.css", stylesHandler)
-	http.HandleFunc("/favicon.ico", favIconHandler)
 	http.HandleFunc("/sw.js", serviceWorkerHandler)
+	http.HandleFunc("/manifest.json", manifestHandler)
+	http.HandleFunc("/icons/", iconsHandler)
 	fmt.Println("...Serving on port", PORT)
 	http.ListenAndServe(PORT, nil)
 }
@@ -45,15 +46,21 @@ func stylesHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.Method, r.URL)
 }
 
-// favIconHandler function handles path "/favicon.ico"
-func favIconHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "icons/wikipedia.ico")
-	fmt.Println(r.Method, r.URL)
-}
-
 // serviceWorkerHandler function handles path "/sw.js"
 func serviceWorkerHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "js/sw.js")
+	fmt.Println(r.Method, r.URL)
+}
+
+// manifestHandler function handles path "/manifest.js"
+func manifestHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "manifest.json")
+	fmt.Println(r.Method, r.URL)
+}
+
+func iconsHandler(w http.ResponseWriter, r *http.Request) {
+	iconPath := r.URL.Path[1:]
+	http.ServeFile(w, r, iconPath)
 	fmt.Println(r.Method, r.URL)
 }
 

@@ -20,12 +20,13 @@ self.addEventListener('install', (event) => {
 // Respond with cached resources
 self.addEventListener('fetch', (event) => {
 	event.respondWith(
-	  fromCache(event.request)
-  );
-  event.waitUntil(
-	  update(event.request)
-		  .then(location.reload)
-  );
+		fromCache(event.request)
+	);
+	event.waitUntil(
+		update(event.request).then((isUpdated) => {
+			if (isUpdated) reload();
+		})
+	)
 });
 
 // Get data from the cache or fetch otherwise
@@ -39,12 +40,39 @@ const fromCache = (request) => {
 
 // Fetch data and update the cache
 const update = (request) => {
-  return fetch(request).then((response) => {
-	  return caches.open(CACHE_NAME).then((cache) => {
-		  cache.put(request, response.clone());
-		  return response;
-	  });
-  });
+	return fetch(request).then((response) => {
+		return caches.open(CACHE_NAME).then((cache) => {
+			let isUpdated = false;
+			// check if new index page is different from what is in the cache
+			return cache.match('/').then((indexCache) => {
+				if (response.url === indexCache.url) {
+					return Promise.all([
+						response.clone().text(),
+						indexCache.text()
+					]);
+				}
+				return Promise.resolve(false);
+			}).then((indexVersions) => {
+				if (indexVersions) {
+					const [newIndex, oldIndex] = indexVersions;
+					if (newIndex !== oldIndex) {
+						isUpdated = true;
+					}
+				}
+				return cache.put(request, response);				
+			}).then(() => {
+				return Promise.resolve(isUpdated);
+			});
+		});
+	});
+}
+
+
+// Sent a message to reload the window
+const reload = () => {
+	self.clients.matchAll().then((clients) => {
+		clients.forEach((client) => client.postMessage('reload-window'));
+    });
 }
 
 // Delete outdated caches

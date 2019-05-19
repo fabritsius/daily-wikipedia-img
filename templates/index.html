@@ -48,6 +48,12 @@
 					}, (err) => {
 						console.log('ServiceWorker registration failed: ', err);
 					});
+
+					navigator.serviceWorker.addEventListener('message', (event) => {
+						if (event.data && event.data === 'reload-window') {
+							window.location.reload();
+						}
+					});
 				});
 			}
 		</script>

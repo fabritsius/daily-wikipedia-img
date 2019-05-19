@@ -28,6 +28,7 @@ func main() {
 	http.HandleFunc("/sw.js", serviceWorkerHandler)
 	http.HandleFunc("/manifest.json", manifestHandler)
 	http.HandleFunc("/icons/", iconsHandler)
+	http.HandleFunc("/favicon.ico", faviconHandler)
 	fmt.Println("...Serving on port", PORT)
 	http.ListenAndServe(PORT, nil)
 }
@@ -58,10 +59,16 @@ func manifestHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.Method, r.URL)
 }
 
+// iconsHandler function handles all "/icons/" paths
 func iconsHandler(w http.ResponseWriter, r *http.Request) {
 	iconPath := r.URL.Path[1:]
 	http.ServeFile(w, r, iconPath)
 	fmt.Println(r.Method, r.URL)
+}
+
+// faviconHandler function handles path "/favicon.ico"
+func faviconHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "icons/favicon.ico")
 }
 
 // WikiData – representation of Wikipedia's Daily Posts Data

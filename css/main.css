@@ -80,11 +80,6 @@ a.original-post-link {
 	font-size: 0.9em;
 }
 
-a.original-post-link:hover {
-	color: white;
-	background-color: #296dab;
-}
-
 div.item-footer {
 	display: flex;
 	flex-wrap: wrap;
@@ -104,11 +99,6 @@ a.see-more {
 	color: #296dab;
 	font-size: 1.3em;
 	text-decoration: none;
-}
-
-a.see-more:hover {
-	color: white;
-	background-color: #296dab;
 }
 
 footer {
@@ -136,11 +126,6 @@ footer a {
     cursor: pointer;
 }
 
-footer a:hover {
-    color: white;
-    background-color: #296dab; 
-}
-
 @media screen and (max-width: 729px) {
 	h3.item-day {
 		position: static;
@@ -154,5 +139,12 @@ footer a:hover {
 @media screen and (max-width: 467px) {
 	h1, a.see-more {
 		font-size: 6vw;
+	}
+}
+
+@media (hover: hover) {
+	a.color-hover:hover {
+		color: white;
+		background-color: #296dab;
 	}
 }

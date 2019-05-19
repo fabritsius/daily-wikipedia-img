@@ -1,6 +1,7 @@
 body {
-	max-width: 580px;
 	width: calc(100% - 20px);
+	min-width: 300px;
+	max-width: 580px;
 	margin: 5px auto;
 	padding: 0 10px;
 	font-size: 1.1em;

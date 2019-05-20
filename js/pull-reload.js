@@ -22,7 +22,7 @@ const between = (value, minLimit, maxLimit) => {
 }
 
 const touchStartHandler = (event) => {
-    if (window.pageYOffset === 0) {
+    if (window.pageYOffset <= 20) {
         if (event.touches.length === 1) {
             startY = event.touches[0].clientY;
             window.addEventListener('touchmove', moveEventHandler);

@@ -2,7 +2,7 @@ const mainContent = document.querySelector('main');
 const reloadTextDiv = document.querySelector('#reload-indicator-text');
 
 const reloadText = 'reload...'
-const dYtrigger = 60;
+const dYtrigger = 80;
 
 let startY = 0;
 
@@ -21,8 +21,10 @@ const between = (value, minLimit, maxLimit) => {
     return Math.max(minLimit, Math.min(value, maxLimit)); 
 }
 
+const pageMinOffset = 20;
+
 const touchStartHandler = (event) => {
-    if (window.pageYOffset <= 20) {
+    if (window.pageYOffset <= pageMinOffset) {
         if (event.touches.length === 1) {
             startY = event.touches[0].clientY;
             window.addEventListener('touchmove', moveEventHandler);
@@ -35,10 +37,10 @@ const touchEndHandler = (event) => {
     reloadTextDiv.innerHTML = '';
     window.removeEventListener('touchmove', moveEventHandler);
 
-    if (window.pageYOffset === 0) {
+    if (window.pageYOffset <= pageMinOffset) {
         const dY = event.changedTouches[0].clientY - startY;
         if (dY > dYtrigger) {
-            window.location.reload();
+            history.go(0);
         }
     }
 

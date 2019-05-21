@@ -138,7 +138,7 @@ footer a {
 	font-size: 1.4em;
 	font-family: Arial, Helvetica, sans-serif;
 	z-index: 1000;
-	/* transform: translate3d(0, -52px, 0); */
+	transform: translate3d(0, -52px, 0);
 }
 
 #reload-indicator.successful {

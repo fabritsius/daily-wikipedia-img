@@ -35,7 +35,6 @@ const touchStartHandler = (event) => {
 
 const touchEndHandler = (event) => {
     mainContent.style.opacity = 1;
-    reloadTextDiv.innerHTML = '';
     window.removeEventListener('touchmove', moveEventHandler);
 
     if (window.pageYOffset <= pageMinOffset) {

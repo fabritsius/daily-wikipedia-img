@@ -142,8 +142,7 @@ footer a {
 }
 
 #reload-indicator.successful {
-	color: white;
-	background: linear-gradient(#41f1419f, #ffffff9d);
+	color: #2b9c2b;
 }
 
 #reload-indicator-text {

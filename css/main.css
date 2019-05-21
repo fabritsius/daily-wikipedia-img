@@ -160,9 +160,9 @@ footer a {
 	}
 }
 
-@media screen and (max-width: 467px) {
+@media screen and (max-width: 340px) {
 	h1, a.see-more {
-		font-size: 6vw;
+		font-size: 100%;
 	}
 }
 

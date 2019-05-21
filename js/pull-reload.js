@@ -1,4 +1,5 @@
 const mainContent = document.querySelector('main');
+const reloadDiv = document.querySelector('#reload-indicator');
 const reloadTextDiv = document.querySelector('#reload-indicator-text');
 
 const reloadText = 'reload...'
@@ -40,7 +41,10 @@ const touchEndHandler = (event) => {
     if (window.pageYOffset <= pageMinOffset) {
         const dY = event.changedTouches[0].clientY - startY;
         if (dY > dYtrigger) {
-            history.go(0);
+            reloadDiv.className = 'successful';
+            setTimeout(() => {
+                history.go(0);
+            }, 100);
         }
     }
 

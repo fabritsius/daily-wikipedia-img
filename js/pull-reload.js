@@ -40,7 +40,7 @@ const touchEndHandler = (event) => {
     if (window.pageYOffset <= pageMinOffset) {
         const dY = event.changedTouches[0].clientY - startY;
         if (dY > dYtrigger) {
-            reloadDiv.className = 'successful';
+            reloadDiv.className = navigator.onLine ? 'successful' : 'failed';
             setTimeout(() => {
                 history.go(0);
             }, 100);

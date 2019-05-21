@@ -138,11 +138,15 @@ footer a {
 	font-size: 1.4em;
 	font-family: Arial, Helvetica, sans-serif;
 	z-index: 1000;
-	transform: translate3d(0, -52px, 0);
+	/* transform: translate3d(0, -52px, 0); */
 }
 
 #reload-indicator.successful {
 	color: #2b9c2b;
+}
+
+#reload-indicator.failed {
+	color: #e41b1b;
 }
 
 #reload-indicator-text {

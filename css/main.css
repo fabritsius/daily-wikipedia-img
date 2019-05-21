@@ -145,6 +145,10 @@ footer a {
 	color: #2b9c2b;
 }
 
+#reload-indicator.failed {
+	color: #e41b1b;
+}
+
 #reload-indicator-text {
 	margin: 2px auto;
 	width: 60px;

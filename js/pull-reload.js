@@ -2,24 +2,36 @@ const mainContent = document.querySelector('main');
 const reloadDiv = document.querySelector('#reload-indicator');
 const reloadTextDiv = document.querySelector('#reload-indicator-text');
 
-const reloadText = 'reload...'
+const reloadText = 'reload '
+const moons = ['🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔']
 const dYtrigger = 80;
 
 let startY = 0;
+let phasing = null;
 
 const moveEventHandler = (event) => {
     if (event.touches.length === 1) {
-        const dY = event.touches[0].clientY - startY;
-        const minOpacity = 1 - (reloadText.length * 0.1);
-        const opacity = between(1 - (dY / 100), minOpacity, 1);
-        mainContent.style.opacity = opacity;
-        const lettersCount = Math.floor((1 - opacity) * 10);
-        reloadTextDiv.innerHTML = reloadText.slice(0, lettersCount);
+        mainContent.style.opacity = 0.7;
+        animateReloadBtn();
     }
 }
 
-const between = (value, minLimit, maxLimit) => {
-    return Math.max(minLimit, Math.min(value, maxLimit)); 
+const animateReloadBtn = () => {
+    if (!phasing) {
+        const frames = moons.length - 1;
+        let phase = 0
+        phasing = setInterval(() => {
+            reloadTextDiv.innerHTML = reloadText + moons[phase++];
+            if (phase > frames) {
+                phase = 0;
+            }
+        }, 150);
+    }
+}
+
+const removeReloadBtnAnimation = () => {
+    clearInterval(phasing);
+    phasing = null;
 }
 
 const pageMinOffset = 20;
@@ -36,6 +48,7 @@ const touchStartHandler = (event) => {
 const touchEndHandler = (event) => {
     mainContent.style.opacity = 1;
     window.removeEventListener('touchmove', moveEventHandler);
+    removeReloadBtnAnimation();
 
     if (window.pageYOffset <= pageMinOffset) {
         const dY = event.changedTouches[0].clientY - startY;

@@ -151,7 +151,7 @@ footer a {
 
 #reload-indicator-text {
 	margin: 2px auto;
-	width: 60px;
+	width: 101px;
 }
 
 @media screen and (max-width: 729px) {

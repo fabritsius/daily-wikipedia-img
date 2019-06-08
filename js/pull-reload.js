@@ -11,8 +11,11 @@ let phasing = null;
 
 const moveEventHandler = (event) => {
     if (event.touches.length === 1) {
-        mainContent.style.opacity = 0.7;
-        animateReloadBtn();
+        const dY = event.touches[0].clientY - startY;
+        if (dY > 0) {
+            mainContent.style.opacity = 0.7;
+            animateReloadBtn();
+        }
     }
 }
 

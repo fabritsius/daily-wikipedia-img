@@ -164,7 +164,9 @@ func (d *DailyItem) FillWithValues() {
 					d.ImgSrc = "https:" + imgAttrs["src"]
 					tokenizer.Next()
 					videoAttrs := getAttrVals(tokenizer)
-					d.Title = template.HTML(fmt.Sprintf("<a href=\"%s\" class=\"video-uri color-hover\" target=\"_blank\">Play media</a>", videoAttrs["href"]))
+					d.Title = template.HTML(
+						fmt.Sprintf("<a class='video-uri color-hover' target='_blank'" +
+									"href='%s'>Play media</a>", videoAttrs["href"]))
 				} else if isHeader(sTag, attrs) {
 					tokenizer.Next()
 					d.Title = template.HTML(string(tokenizer.Text()))

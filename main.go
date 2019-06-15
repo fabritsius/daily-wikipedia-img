@@ -141,19 +141,17 @@ func (d *DailyItem) FillWithValues() {
 			sTag := string(tag)
 			if hasAttr {
 				attrs := getAttrVals(tokenizer)
-				if sTag == "a" {
-					if isImage(attrs) {
-						d.Title = template.HTML(attrs["title"])
-						tokenizer.Next()
-						imgAttrs := getAttrVals(tokenizer)
-						d.ImgSrc = "https:" + imgAttrs["src"]
-						if srcset, ok := imgAttrs["srcset"]; ok {
-							srcSets := strings.Fields(srcset)
-							for i, item := range srcSets {
-								if item == "2x" {
-									if len(srcSets[i-1]) > 54 {
-										d.ImgSrc = "https:" + srcSets[i-1]
-									}
+				if isImage(sTag, attrs) {
+					d.Title = template.HTML(attrs["title"])
+					tokenizer.Next()
+					imgAttrs := getAttrVals(tokenizer)
+					d.ImgSrc = https(imgAttrs["src"])
+					if srcset, ok := imgAttrs["srcset"]; ok {
+						srcSets := strings.Fields(srcset)
+						for i, item := range srcSets {
+							if item == "2x" {
+								if len(srcSets[i-1]) > 54 {
+									d.ImgSrc = https(srcSets[i-1])
 								}
 							}
 						}
@@ -161,7 +159,7 @@ func (d *DailyItem) FillWithValues() {
 				} else if isVideo(sTag, attrs) {
 					tokenizer.Next()
 					imgAttrs := getAttrVals(tokenizer)
-					d.ImgSrc = "https:" + imgAttrs["src"]
+					d.ImgSrc = https(imgAttrs["src"])
 					tokenizer.Next()
 					videoAttrs := getAttrVals(tokenizer)
 					d.Title = template.HTML(
@@ -200,8 +198,8 @@ func getAttrVals(t *html.Tokenizer) map[string]string {
 }
 
 // isImage return true if tag is an image in wiki-xml
-func isImage(attrs map[string]string) bool {
-	return attrs["class"] == "image"
+func isImage(tag string, attrs map[string]string) bool {
+	return tag == "a" && attrs["class"] == "image"
 }
 
 // isVideo returns true if tag is a video in wiki-xml
@@ -212,4 +210,9 @@ func isVideo(tag string, attrs map[string]string) bool {
 // isHeader returns true if tag is a header in wiki-xml
 func isHeader(tag string, attrs map[string]string) bool {
 	return tag == "h1" && attrs["id"] == "firstHeading"
+}
+
+// path returns a secure version of URI
+func https(uri string) string {
+	return "https:" + uri
 }

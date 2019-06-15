@@ -142,7 +142,7 @@ func (d *DailyItem) FillWithValues() {
 			if hasAttr {
 				attrs := getAttrVals(tokenizer)
 				if sTag == "a" {
-					if attrs["class"] == "image" {
+					if isImage(attrs) {
 						d.Title = template.HTML(attrs["title"])
 						tokenizer.Next()
 						imgAttrs := getAttrVals(tokenizer)
@@ -158,14 +158,14 @@ func (d *DailyItem) FillWithValues() {
 							}
 						}
 					}
-				} else if sTag == "div" && attrs["class"] == "PopUpMediaTransform" {
+				} else if isVideo(sTag, attrs) {
 					tokenizer.Next()
 					imgAttrs := getAttrVals(tokenizer)
 					d.ImgSrc = "https:" + imgAttrs["src"]
 					tokenizer.Next()
 					videoAttrs := getAttrVals(tokenizer)
 					d.Title = template.HTML(fmt.Sprintf("<a href=\"%s\" class=\"video-uri color-hover\" target=\"_blank\">Play media</a>", videoAttrs["href"]))
-				} else if sTag == "h1" && attrs["id"] == "firstHeading" {
+				} else if isHeader(sTag, attrs) {
 					tokenizer.Next()
 					d.Title = template.HTML(string(tokenizer.Text()))
 				}
@@ -195,4 +195,19 @@ func getAttrVals(t *html.Tokenizer) map[string]string {
 			return result
 		}
 	}
+}
+
+// isImage return true if tag is an image in wiki-xml
+func isImage(attrs map[string]string) bool {
+	return attrs["class"] == "image"
+}
+
+// isVideo returns true if tag is a video in wiki-xml
+func isVideo(tag string, attrs map[string]string) bool {
+	return tag == "div" && attrs["class"] == "PopUpMediaTransform"
+}
+
+// isHeader returns true if tag is a header in wiki-xml
+func isHeader(tag string, attrs map[string]string) bool {
+	return tag == "h1" && attrs["id"] == "firstHeading"
 }

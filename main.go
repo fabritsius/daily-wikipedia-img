@@ -108,7 +108,7 @@ func GetWikiData(link string, r *http.Request) WikiData {
 
 // DailyItem – representation of Wikipedia Post Data
 type DailyItem struct {
-	Title       string
+	Title       template.HTML
 	Day         string `xml:"title"`
 	Description string
 	ImgSrc      string
@@ -143,7 +143,7 @@ func (d *DailyItem) FillWithValues() {
 				attrs := getAttrVals(tokenizer)
 				if sTag == "a" {
 					if attrs["class"] == "image" {
-						d.Title = attrs["title"]
+						d.Title = template.HTML(attrs["title"])
 						tokenizer.Next()
 						imgAttrs := getAttrVals(tokenizer)
 						d.ImgSrc = "https:" + imgAttrs["src"]
@@ -158,14 +158,16 @@ func (d *DailyItem) FillWithValues() {
 							}
 						}
 					}
-				} else if sTag == "video" {
-					// [WARNING] unfinished code
-					// since videos are rare among daily images
-					// this part is hard to improve at the moment
-					d.ImgSrc = "https:" + attrs["poster"]
+				} else if sTag == "div" && attrs["class"] == "PopUpMediaTransform" {
+					tokenizer.Next()
+					imgAttrs := getAttrVals(tokenizer)
+					d.ImgSrc = "https:" + imgAttrs["src"]
+					tokenizer.Next()
+					videoAttrs := getAttrVals(tokenizer)
+					d.Title = template.HTML(fmt.Sprintf("<a href=\"%s\" class=\"video-uri color-hover\" target=\"_blank\">Play media</a>", videoAttrs["href"]))
 				} else if sTag == "h1" && attrs["id"] == "firstHeading" {
 					tokenizer.Next()
-					d.Title = string(tokenizer.Text())
+					d.Title = template.HTML(string(tokenizer.Text()))
 				}
 			} else if sTag == "p" && !recordingDescription {
 				recordingDescription = true

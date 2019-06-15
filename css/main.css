@@ -63,6 +63,12 @@ img {
     margin: 0 auto;
 }
 
+a.video-uri, a.video-uri:visited {
+	text-decoration: underline;
+	color: #296dab;
+	padding: 2px 4px;
+}
+
 p.item-description {
 	padding-bottom: 20px;
 	font-size: 1em;

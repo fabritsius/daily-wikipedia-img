@@ -109,18 +109,17 @@ func GetWikiData(link string, r *http.Request) WikiData {
 // DailyItem – representation of Wikipedia Post Data
 type DailyItem struct {
 	Title       template.HTML
-	Day         string `xml:"title"`
-	Description string
+	Day         string 			`xml:"title"`
+	Description template.HTML
 	ImgSrc      string
-	Link        string `xml:"link"`
-	HTML        string `xml:"description"`
+	Link        string 			`xml:"link"`
+	HTML        string 			`xml:"description"`
 }
 
 // FillWithValues function fills DailyItem structure with values from HTML
 func (d *DailyItem) FillWithValues() {
 	defer wg.Done()
 	tokenizer := html.NewTokenizer(strings.NewReader(d.HTML))
-	isFirstParagraph := true
 	recordingDescription := false
 	// Leave only the date for each post
 	dayTitleWords := strings.Split(d.Day, " ")
@@ -136,11 +135,22 @@ func (d *DailyItem) FillWithValues() {
 				fmt.Println(err)
 			}
 			return
+
 		case html.StartTagToken:
 			tag, hasAttr := tokenizer.TagName()
 			sTag := string(tag)
-			if hasAttr {
+
+			if recordingDescription {
+				if sTag == "a" {
+					attrs := getAttrVals(tokenizer)
+					d.Description += buildWikipediaLink(attrs)
+				} else {
+					d.Description += template.HTML(tokenizer.Raw())
+				}
+
+			} else if hasAttr {
 				attrs := getAttrVals(tokenizer)
+
 				if isImage(sTag, attrs) {
 					d.Title = template.HTML(attrs["title"])
 					tokenizer.Next()
@@ -156,6 +166,7 @@ func (d *DailyItem) FillWithValues() {
 							}
 						}
 					}
+
 				} else if isVideo(sTag, attrs) {
 					tokenizer.Next()
 					imgAttrs := getAttrVals(tokenizer)
@@ -165,21 +176,29 @@ func (d *DailyItem) FillWithValues() {
 					d.Title = template.HTML(
 						fmt.Sprintf("<a class='video-uri color-hover' target='_blank'" +
 									"href='%s'>Play media</a>", videoAttrs["href"]))
+								
 				} else if isHeader(sTag, attrs) {
 					tokenizer.Next()
 					d.Title = template.HTML(string(tokenizer.Text()))
 				}
-			} else if sTag == "p" && !recordingDescription {
+
+			} else if sTag == "p" {
 				recordingDescription = true
+				d.Description += template.HTML(tokenizer.Raw())
 			}
+
 		case html.EndTagToken:
-			tag, _ := tokenizer.TagName()
-			if string(tag) == "p" && isFirstParagraph {
-				isFirstParagraph = false
+			if recordingDescription {
+				tag, _ := tokenizer.TagName()
+				if string(tag) == "p" {
+					recordingDescription = false
+				}
+				d.Description += template.HTML(tokenizer.Raw())
 			}
+
 		case html.TextToken:
-			if recordingDescription && isFirstParagraph {
-				d.Description += string(tokenizer.Text())
+			if recordingDescription {
+				d.Description += template.HTML(tokenizer.Raw())
 			}
 		}
 	}
@@ -212,7 +231,15 @@ func isHeader(tag string, attrs map[string]string) bool {
 	return tag == "h1" && attrs["id"] == "firstHeading"
 }
 
-// path returns a secure version of URI
+// https returns a secure version of URI
 func https(uri string) string {
 	return "https:" + uri
+}
+
+// buildWikipediaLink converts relative URI to Wikipedia URI
+func buildWikipediaLink(attrs map[string]string) template.HTML {
+	wikipediaRoot := "https://en.wikipedia.org"
+	linkTemplate := "<a href='%s' title='%s' target='_blank'>"
+	return template.HTML(
+		fmt.Sprintf(linkTemplate, wikipediaRoot + attrs["href"], attrs["title"]))
 }

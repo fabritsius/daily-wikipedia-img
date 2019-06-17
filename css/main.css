@@ -69,11 +69,20 @@ a.video-uri, a.video-uri:visited {
 	padding: 2px 4px;
 }
 
-p.item-description {
-	padding-bottom: 20px;
+div.item-description {
+	padding-bottom: 10px;
 	font-size: 1em;
 	font-family: "Open Sans", normal;
 	font-weight: 500;
+}
+
+div.item-description a {
+	text-decoration: none;
+	color: #175896;
+}
+
+div.item-description a:hover {
+	text-decoration: underline;
 }
 
 div.original-post-link-box {

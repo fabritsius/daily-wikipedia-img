@@ -140,8 +140,12 @@ func (d *DailyItem) FillWithValues() {
 			tag, hasAttr := tokenizer.TagName()
 			sTag := string(tag)
 
-			if recordingDescription {
-				if sTag == "a" {
+			if sTag == "p" {
+				recordingDescription = true
+				d.Description += template.HTML(tokenizer.Raw())
+			
+			} else if recordingDescription {
+				if sTag == "a" && hasAttr {
 					attrs := getAttrVals(tokenizer)
 					d.Description += buildWikipediaLink(attrs)
 				} else {
@@ -181,12 +185,8 @@ func (d *DailyItem) FillWithValues() {
 					tokenizer.Next()
 					d.Title = template.HTML(string(tokenizer.Text()))
 				}
-
-			} else if sTag == "p" {
-				recordingDescription = true
-				d.Description += template.HTML(tokenizer.Raw())
 			}
-
+		
 		case html.EndTagToken:
 			if recordingDescription {
 				tag, _ := tokenizer.TagName()

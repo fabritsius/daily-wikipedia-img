@@ -15,11 +15,6 @@ import (
 	"google.golang.org/appengine/urlfetch"
 )
 
-// URI – Wikipedia Daily Image API Link
-const URI string = "https://en.wikipedia.org/w/api.php?action=featuredfeed&format=json&feed=potd"
-
-var wg sync.WaitGroup
-
 // main function sets server handlers and starts the server
 func main() {
 	http.HandleFunc("/", indexHandler)
@@ -34,7 +29,7 @@ func main() {
 
 // indexHandler function handles path "/"
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	wikiData := getWikiData(URI, r)
+	wikiData := getWikiData(r)
 	t, _ := template.ParseFiles("templates/index.html")
 	t.Execute(w, wikiData)
 	fmt.Println(r.Method, r.URL)
@@ -83,10 +78,15 @@ type wikiData struct {
 }
 
 // getWikiData function fetches and returns "picture of the day" data
-func getWikiData(link string, r *http.Request) wikiData {
+func getWikiData(r *http.Request) wikiData {
 	ctx := appengine.NewContext(r)
 	client := urlfetch.Client(ctx)
-	resp, _ := client.Get(URI)
+
+	// Wikipedia Picture of the Day (POTD) API Link
+	wikiURI := "https://en.wikipedia.org/w/api.php" +
+			   "?action=featuredfeed&format=json&feed=potd"
+
+	resp, _ := client.Get(wikiURI)
 	bytes, _ := ioutil.ReadAll(resp.Body)
 	resp.Body.Close()
 
@@ -99,9 +99,10 @@ func getWikiData(link string, r *http.Request) wikiData {
 		data.Items[i], data.Items[j] = data.Items[j], data.Items[i]
 	}
 
+	var wg sync.WaitGroup
 	for i := range data.Items {
 		wg.Add(1)
-		go data.Items[i].fillWithValues()
+		go data.Items[i].fillWithValues(&wg)
 	}
 	wg.Wait()
 	return data
@@ -118,7 +119,7 @@ type dailyItem struct {
 }
 
 // fillWithValues method fills DailyItem structure with values from HTML
-func (d *dailyItem) fillWithValues() {
+func (d *dailyItem) fillWithValues(wg *sync.WaitGroup) {
 	defer wg.Done()
 	tokenizer := html.NewTokenizer(strings.NewReader(d.HTML))
 	recordingDescription := false

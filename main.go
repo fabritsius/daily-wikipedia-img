@@ -13,14 +13,6 @@ import (
 	"golang.org/x/net/html"
 )
 
-// PORT – server port constant
-const PORT string = ":5000"
-
-// URI – Wikipedia Daily Image API Link
-const URI string = "https://en.wikipedia.org/w/api.php?action=featuredfeed&format=json&feed=potd"
-
-var wg sync.WaitGroup
-
 // main function sets server handlers and starts the server
 func main() {
 	http.HandleFunc("/", indexHandler)
@@ -31,13 +23,14 @@ func main() {
 	http.HandleFunc("/icons/", iconsHandler)
 	http.HandleFunc("/favicon.ico", faviconHandler)
 	
-	fmt.Println("...Serving on port", PORT)
-	http.ListenAndServe(PORT, nil)
+	port := ":5000"
+	fmt.Println("...Serving on port", port)
+	http.ListenAndServe(port, nil)
 }
 
 // indexHandler function handles path "/"
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	wikiData := getWikiData(URI)
+	wikiData := getWikiData()
 	t, _ := template.ParseFiles("templates/index.html")
 	t.Execute(w, wikiData)
 	fmt.Println(r.Method, r.URL)
@@ -86,8 +79,12 @@ type wikiData struct {
 }
 
 // getWikiData function fetches and returns "picture of the day" data
-func getWikiData(link string) wikiData {
-	resp, _ := http.Get(URI)
+func getWikiData() wikiData {
+	// Wikipedia Picture of the Day (POTD) API Link
+	wikiURI := "https://en.wikipedia.org/w/api.php" + 
+			   "?action=featuredfeed&format=json&feed=potd"
+
+	resp, _ := http.Get(wikiURI)
 	bytes, _ := ioutil.ReadAll(resp.Body)
 	resp.Body.Close()
 
@@ -100,9 +97,10 @@ func getWikiData(link string) wikiData {
 		data.Items[i], data.Items[j] = data.Items[j], data.Items[i]
 	}
 
+	var wg sync.WaitGroup
 	for i := range data.Items {
 		wg.Add(1)
-		go data.Items[i].fillWithValues()
+		go data.Items[i].fillWithValues(&wg)
 	}
 	wg.Wait()
 	return data
@@ -119,7 +117,7 @@ type dailyItem struct {
 }
 
 // fillWithValues method fills DailyItem structure with values from HTML
-func (d *dailyItem) fillWithValues() {
+func (d *dailyItem) fillWithValues(wg *sync.WaitGroup) {
 	defer wg.Done()
 	tokenizer := html.NewTokenizer(strings.NewReader(d.HTML))
 	recordingDescription := false

@@ -30,13 +30,14 @@ func main() {
 	http.HandleFunc("/manifest.json", manifestHandler)
 	http.HandleFunc("/icons/", iconsHandler)
 	http.HandleFunc("/favicon.ico", faviconHandler)
+	
 	fmt.Println("...Serving on port", PORT)
 	http.ListenAndServe(PORT, nil)
 }
 
 // indexHandler function handles path "/"
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	wikiData := GetWikiData(URI)
+	wikiData := getWikiData(URI)
 	t, _ := template.ParseFiles("templates/index.html")
 	t.Execute(w, wikiData)
 	fmt.Println(r.Method, r.URL)
@@ -54,6 +55,7 @@ func serviceWorkerHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.Method, r.URL)
 }
 
+// reloadScriptHandler function handles path "/pull-reload.js"
 func reloadScriptHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "js/pull-reload.js")
 }
@@ -76,20 +78,20 @@ func faviconHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "icons/favicon.ico")
 }
 
-// WikiData – representation of Wikipedia's Daily Posts Data
-type WikiData struct {
+// wikiData – representation of Wikipedia's Daily Posts Data
+type wikiData struct {
 	Title       string      `xml:"channel>title"`
 	Description string      `xml:"channel>description"`
-	Items       []DailyItem `xml:"channel>item"`
+	Items       []dailyItem `xml:"channel>item"`
 }
 
-// GetWikiData function fetches and returns "picture of the day" data
-func GetWikiData(link string) WikiData {
+// getWikiData function fetches and returns "picture of the day" data
+func getWikiData(link string) wikiData {
 	resp, _ := http.Get(URI)
 	bytes, _ := ioutil.ReadAll(resp.Body)
 	resp.Body.Close()
 
-	var data WikiData
+	var data wikiData
 	xml.Unmarshal(bytes, &data)
 
 	// Reverse order of elements in DailyItems slice
@@ -100,14 +102,14 @@ func GetWikiData(link string) WikiData {
 
 	for i := range data.Items {
 		wg.Add(1)
-		go data.Items[i].FillWithValues()
+		go data.Items[i].fillWithValues()
 	}
 	wg.Wait()
 	return data
 }
 
-// DailyItem – representation of Wikipedia Post Data
-type DailyItem struct {
+// dailyItem – representation of Wikipedia Post Data
+type dailyItem struct {
 	Title       template.HTML
 	Day         string 			`xml:"title"`
 	Description template.HTML
@@ -116,8 +118,8 @@ type DailyItem struct {
 	HTML        string 			`xml:"description"`
 }
 
-// FillWithValues function fills DailyItem structure with values from HTML
-func (d *DailyItem) FillWithValues() {
+// fillWithValues method fills DailyItem structure with values from HTML
+func (d *dailyItem) fillWithValues() {
 	defer wg.Done()
 	tokenizer := html.NewTokenizer(strings.NewReader(d.HTML))
 	recordingDescription := false

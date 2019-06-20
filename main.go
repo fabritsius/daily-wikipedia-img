@@ -204,7 +204,7 @@ func (d *DailyItem) FillWithValues() {
 	}
 }
 
-// getAttrVals function returns map with tag's attributes
+// getAttrVals function returns map with tag attributes
 func getAttrVals(t *html.Tokenizer) map[string]string {
 	var result = make(map[string]string)
 	for {
@@ -216,17 +216,17 @@ func getAttrVals(t *html.Tokenizer) map[string]string {
 	}
 }
 
-// isImage return true if tag is an image in wiki-xml
+// isImage return true if tag is an image in wiki-html
 func isImage(tag string, attrs map[string]string) bool {
 	return tag == "a" && attrs["class"] == "image"
 }
 
-// isVideo returns true if tag is a video in wiki-xml
+// isVideo returns true if tag is a video in wiki-html
 func isVideo(tag string, attrs map[string]string) bool {
 	return tag == "div" && attrs["class"] == "PopUpMediaTransform"
 }
 
-// isHeader returns true if tag is a header in wiki-xml
+// isHeader returns true if tag is a header in wiki-html
 func isHeader(tag string, attrs map[string]string) bool {
 	return tag == "h1" && attrs["id"] == "firstHeading"
 }

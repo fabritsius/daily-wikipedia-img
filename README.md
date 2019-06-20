@@ -25,8 +25,8 @@ To deploy it to App Engine:
 2. Create a new app `gcloud app create --project=[YOUR_PROJECT_NAME]`
 3. Install gcloud components for Go `gcloud components install app-engine-go`
 4. Clone this repo `git clone https://github.com/fabritsius/daily-wikipedia-img`
-5. Change branch `git checkout app-engine-ver`
-6. Change directory `cd daily-wikipedia-img`
+5. Change directory `cd daily-wikipedia-img`
+6. Change branch `git checkout app-engine-ver`
 7. Deploy `gcloud app deploy`
 8. Open the app `gcloud app browse`
 

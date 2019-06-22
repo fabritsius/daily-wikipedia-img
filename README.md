@@ -35,10 +35,9 @@ To deploy it to App Engine:
 ### TODO
 
 - [x] Add core features and create this repo
-- [x] Upload server to App Engine
+- [x] Upload the server to App Engine
 - [x] Create gh-pages wrapper for the project
 - [x] Host the website with GitHub
 - [x] Make the design more pleasing to look at
 - [x] Add a simple offline experience
 - [x] Make the website installable (convert to PWA)
-- [ ] Add more features (like image pop-ups)

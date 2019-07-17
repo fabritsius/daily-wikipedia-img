@@ -1,10 +1,32 @@
 body {
+	margin: 0;
+}
+
+main {
 	width: calc(100% - 20px);
 	min-width: 300px;
 	max-width: 580px;
 	margin: 5px auto;
 	padding: 0 10px;
+	padding-top: 80px;
 	font-size: 1.1em;
+}
+
+nav {
+	color: white;
+    background-color: #296dabf7;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 5px 0;
+    z-index: 100;
+    box-shadow: 0 2px 13px #286dabc2;
+}
+
+div.width-box {
+	width: 100%;
+	max-width: 580;
+	margin: 0 auto;
 }
 
 h1 {
@@ -24,14 +46,8 @@ h3.item-day {
 	margin-bottom: 20px;
 	color: white;
 	font-size: 0.9em;
-	background-color: #296dab;	
-}
-
-#page-description {
-	color: grey;
-	padding: 0 30px;
-	margin: 10px 0;
-	font-size: 1.1em;
+	background-color: #296dab;
+	box-shadow: 0 2px 4px #286dabc2;
 }
 
 div.item {
@@ -60,7 +76,8 @@ img {
 	display: block;
 	max-width: calc(100% - 40px);
     height: auto;
-    margin: 0 auto;
+	margin: 0 auto;
+	box-shadow: 0px 2px 5px #bbbbbb;
 }
 
 a.video-uri, a.video-uri:visited {
@@ -174,14 +191,18 @@ footer a {
 		position: static;
 	}
 
-	#page-description {
-		display: none;
+	main {
+		padding-top: 65px;
 	}
 }
 
-@media screen and (max-width: 340px) {
+@media screen and (max-width: 385px) {
 	h1, a.see-more {
-		font-size: 100%;
+		font-size: 120%;
+	}
+
+	main {
+		padding-top: 55px;
 	}
 }
 

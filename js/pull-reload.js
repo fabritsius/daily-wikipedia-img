@@ -14,6 +14,7 @@ const moveEventHandler = (event) => {
         const dY = event.touches[0].clientY - startY;
         if (dY > 0) {
             mainContent.style.opacity = 0.7;
+            reloadDiv.style.opacity = dY / dYtrigger;
             animateReloadBtn();
         }
     }
@@ -54,6 +55,7 @@ const touchEndHandler = (event) => {
     removeReloadBtnAnimation();
 
     if (window.pageYOffset <= pageMinOffset) {
+        reloadDiv.style.opacity = 0.3;
         const dY = event.changedTouches[0].clientY - startY;
         if (dY > dYtrigger) {
             reloadDiv.className = navigator.onLine ? 'successful' : 'failed';

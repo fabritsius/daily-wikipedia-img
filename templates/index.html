@@ -12,9 +12,12 @@
 		<div id="reload-indicator" class="">
 			<div id="reload-indicator-text">reload 🌕</div>
 		</div>
+		<nav>
+			<div class="width-box">
+				<h1>{{ .Title }}</h1>
+			</div>
+		</nav>
 		<main>
-			<h1>{{ .Title }}</h1>
-			<p id="page-description">{{ .Description }}</p>
 			<div>
 			{{ range $_, $Item := .Items }}
 				<div class="item">

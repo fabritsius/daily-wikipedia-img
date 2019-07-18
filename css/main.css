@@ -212,3 +212,17 @@ footer a {
         background-color: #296dab;
     }
 }
+
+@media screen and (display-mode: standalone) and (min-width: 729px) {
+    nav {
+        display: none;
+    }
+
+    main {
+        padding-top: 20px;
+    }
+
+    #reload-indicator {
+        transform: translate3d(0, -52px, 0);
+    }
+}

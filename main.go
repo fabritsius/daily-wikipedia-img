@@ -73,7 +73,6 @@ func faviconHandler(w http.ResponseWriter, r *http.Request) {
 // wikiData – representation of Wikipedia's Daily Posts Data
 type wikiData struct {
 	Title       string      `xml:"channel>title"`
-	Description string      `xml:"channel>description"`
 	Items       []dailyItem `xml:"channel>item"`
 }
 

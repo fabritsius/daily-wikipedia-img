@@ -9,45 +9,47 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="default">
 	</head>
 	<body>
-		<div id="reload-indicator" class="">
-			<div id="reload-indicator-text">reload 🌕</div>
-		</div>
-		<nav>
-			<div class="width-box">
-				<h1>{{ .Title }}</h1>
+		<div class="body-filler">
+			<div id="reload-indicator" class="">
+				<div id="reload-indicator-text">reload 🌕</div>
 			</div>
-		</nav>
-		<main>
-			<div>
-			{{ range $_, $Item := .Items }}
-				<div class="item">
-					<figure>
-						<h3 class="item-day">{{ $Item.Day }}</h3>
-						<a href="{{ $Item.ImgSrc }}" target="_blank">
-							<img src="{{ $Item.ImgSrc }}" alt="{{ $Item.Title }}" loading="lazy">
-						</a>
-						<figcaption>
-							<span>{{ $Item.Title }}</span>
-						</figcaption>
-					</figure>
-					<div class="item-description">{{ $Item.Description }}</div>
-					<div class="item-footer">
-						<div class="daily-random-number-box"></div>
-						<div class="original-post-link-box">
-							<a class="original-post-link color-hover" href="{{ $Item.Link }}" target="_blank">original&nbsp;post</a>
+			<nav>
+				<div class="width-box">
+					<h1>{{ .Title }}</h1>
+				</div>
+			</nav>
+			<main>
+				<div>
+				{{ range $_, $Item := .Items }}
+					<div class="item">
+						<figure>
+							<h3 class="item-day">{{ $Item.Day }}</h3>
+							<a href="{{ $Item.ImgSrc }}" target="_blank">
+								<img src="{{ $Item.ImgSrc }}" alt="{{ $Item.Title }}" loading="lazy">
+							</a>
+							<figcaption>
+								<span>{{ $Item.Title }}</span>
+							</figcaption>
+						</figure>
+						<div class="item-description">{{ $Item.Description }}</div>
+						<div class="item-footer">
+							<div class="daily-random-number-box"></div>
+							<div class="original-post-link-box">
+								<a class="original-post-link color-hover" href="{{ $Item.Link }}" target="_blank">original&nbsp;post</a>
+							</div>
 						</div>
 					</div>
+				{{ end }}
 				</div>
-			{{ end }}
-			</div>
-			<div class="see-more">
-				<a class="see-more color-hover" href="https://en.wikipedia.org/wiki/Wikipedia:Picture_of_the_day/Archive" target="_blank">... more images in the Archive →</a>
-			</div>
-			<footer>
-				<span>Wikipedia picture of the day feed by <a class="color-hover" href="https://github.com/fabritsius" target="_blank">@fabritsius</a> – Sep&nbsp;2018</span>
-				<br><span><a class="color-hover" href="https://github.com/fabritsius/daily-wikipedia-img" target="_blank">Source Code is available on GitHub</a></span>
-			</footer>
-		</main>
+				<div class="see-more">
+					<a class="see-more color-hover" href="https://en.wikipedia.org/wiki/Wikipedia:Picture_of_the_day/Archive" target="_blank">... more images in the Archive →</a>
+				</div>
+				<footer>
+					<span>Wikipedia picture of the day feed by <a class="color-hover" href="https://github.com/fabritsius" target="_blank">@fabritsius</a> – Sep&nbsp;2018</span>
+					<br><span><a class="color-hover" href="https://github.com/fabritsius/daily-wikipedia-img" target="_blank">Source Code is available on GitHub</a></span>
+				</footer>
+			</main>
+		</div>
 		<script src="pull-reload.js"></script>
 		<script>
 			if ('serviceWorker' in navigator) {

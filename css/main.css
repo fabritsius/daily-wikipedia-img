@@ -1,12 +1,14 @@
 body {
     margin: 0;
+    padding: 0;
+    background-color: #2f72ad;
 }
 
 main {
     width: calc(100% - 20px);
     min-width: 300px;
     max-width: 580px;
-    margin: 5px auto;
+    margin: 0 auto;
     padding: 0 10px;
     padding-top: 80px;
     font-size: 1.1em;
@@ -21,6 +23,12 @@ nav {
     padding: 5px 0;
     z-index: 100;
     box-shadow: 0 2px 13px #286dabc2;
+}
+
+div.body-filler {
+    margin: 0;
+    padding: 0;
+    background-color: white;
 }
 
 div.width-box {

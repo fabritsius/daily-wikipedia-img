@@ -6,18 +6,18 @@
 		<link rel="stylesheet" href="styles.css">
 		<link rel="manifest" href="manifest.json">
 		<link rel="apple-touch-icon" href="icons/logo_180w.png">
-		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	</head>
 	<body>
+		<nav>
+			<div class="width-box">
+				<h1>{{ .Title }}</h1>
+			</div>
+		</nav>
 		<div class="body-filler">
 			<div id="reload-indicator" class="">
 				<div id="reload-indicator-text">reload 🌕</div>
 			</div>
-			<nav>
-				<div class="width-box">
-					<h1>{{ .Title }}</h1>
-				</div>
-			</nav>
 			<main>
 				<div>
 				{{ range $_, $Item := .Items }}

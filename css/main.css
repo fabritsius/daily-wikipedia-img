@@ -29,6 +29,9 @@ div.body-filler {
     margin: 0;
     padding: 0;
     background-color: white;
+    height: 100vh;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
 }
 
 div.width-box {

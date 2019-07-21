@@ -41,7 +41,7 @@ const removeReloadBtnAnimation = () => {
 const pageMinOffset = 20;
 
 const touchStartHandler = (event) => {
-    if (window.pageYOffset <= pageMinOffset) {
+    if (mainContent.parentElement.scrollTop <= pageMinOffset) {
         if (event.touches.length === 1) {
             startY = event.touches[0].clientY;
             window.addEventListener('touchmove', moveEventHandler);
@@ -54,7 +54,7 @@ const touchEndHandler = (event) => {
     window.removeEventListener('touchmove', moveEventHandler);
     removeReloadBtnAnimation();
 
-    if (window.pageYOffset <= pageMinOffset) {
+    if (mainContent.parentElement.scrollTop <= pageMinOffset) {
         reloadDiv.style.opacity = 0.3;
         const dY = event.changedTouches[0].clientY - startY;
         if (dY > dYtrigger) {

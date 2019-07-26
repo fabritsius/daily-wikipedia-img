@@ -20,7 +20,7 @@ func main() {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/styles.css", stylesHandler)
 	http.HandleFunc("/sw.js", serviceWorkerHandler)
-	http.HandleFunc("/pull-reload.js", reloadScriptHandler)
+	http.HandleFunc("/js/", scriptsHandler)
 	http.HandleFunc("/manifest.json", manifestHandler)
 	http.HandleFunc("/icons/", iconsHandler)
 	http.HandleFunc("/favicon.ico", faviconHandler)
@@ -47,9 +47,11 @@ func serviceWorkerHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.Method, r.URL)
 }
 
-// reloadScriptHandler function handles path "/pull-reload.js"
-func reloadScriptHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "js/pull-reload.js")
+// scriptsHandler function handles path "/js/"
+func scriptsHandler(w http.ResponseWriter, r *http.Request) {
+	scriptPath := r.URL.Path[1:]
+	http.ServeFile(w, r, scriptPath)
+	fmt.Println(r.Method, r.URL)
 }
 
 // manifestHandler function handles path "/manifest.js"

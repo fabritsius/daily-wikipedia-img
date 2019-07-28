@@ -12,6 +12,7 @@ main {
     padding: 0 10px;
     padding-top: 80px;
     font-size: 1.1em;
+    will-change: transform;
 }
 
 nav {

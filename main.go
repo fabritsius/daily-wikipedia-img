@@ -111,6 +111,7 @@ func getWikiData(r *http.Request) wikiData {
 
 // dailyItem – representation of Wikipedia Post Data
 type dailyItem struct {
+	LocalID		string
 	Title       template.HTML
 	Day         string 			`xml:"title"`
 	Description template.HTML
@@ -128,6 +129,8 @@ func (d *dailyItem) fillWithValues(wg *sync.WaitGroup) {
 	dayTitleWords := strings.Split(d.Day, " ")
 	dtLen := len(dayTitleWords)
 	d.Day = fmt.Sprintf("%s %s", dayTitleWords[dtLen-2], dayTitleWords[dtLen-1])
+	d.LocalID = strings.ToLower(
+		strings.Replace(d.Day, " ", "", 1))
 	// Look through HTML to find relevant pieces of information
 	for {
 		tokenType := tokenizer.Next()

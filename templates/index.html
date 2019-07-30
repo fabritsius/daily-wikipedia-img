@@ -21,7 +21,7 @@
 			<main>
 				<div>
 				{{ range $_, $Item := .Items }}
-					<div class="item">
+					<div id="{{ $Item.LocalID }}" class="item">
 						<figure>
 							<h3 class="item-day">{{ $Item.Day }}</h3>
 							<a href="{{ $Item.ImgSrc }}" target="_blank">
